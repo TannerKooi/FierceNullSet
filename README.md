@@ -4,5 +4,5 @@ iSchool Capstone
 
 Alice Z 
 Dan L
-Dorthy L
+Dorothy L
 Tanner K
