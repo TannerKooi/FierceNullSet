@@ -48,7 +48,7 @@ const HostComViz = ({ data }) => {
             const nodeHash = {};
             const nodes = [];
             const edges = [];
-            console.log('jsssss')
+            console.log('jsss')
 
             Array.prototype.forEach.call(edgeList, (edge) => {
                 if (!nodeHash[edge.source]) {
