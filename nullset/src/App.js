@@ -39,8 +39,8 @@ const Home = () => {
 class Navigation extends Component {
   render() {
     return (
-      <div>
-        <Navbar color="light" light expand="md">
+      <div class='nav-bar'>
+        <Navbar expand="md">
           <Nav className='mr-auto'>
             <NavItem>
               <NavLink href='/' className='navlink'> File </NavLink>
@@ -69,14 +69,17 @@ class SideBar extends Component {
     return (
       <div className='row'> 
         <div className='side-col'>
-        <span className="dot"></span>
+        <div className='sidebar-links'>
+          <img src="img/dashboard-icon.jpg" />
+          Dashboard
+        </div>
         <div className='sidebar-links'>
           <Link to="/hostcomvizpage">test</Link>
-        </div>
         </div>
         <div className='body-col'>
 
         </div>
+      </div>
       </div>
     )
   }
