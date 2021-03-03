@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'; 
 import {
 } from 'reactstrap';
 import './App.css';
+import HostComVizPage from './Components/HostComVizPage';
 
 
 class App extends Component {
@@ -22,8 +24,27 @@ class App extends Component {
         </header>
         <SideBar state={this.state} />
       </div>
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path='/' children={<Home />} />
+            <Route exact path='/hostcomvizpage' children={<HostComVizPage />} />
+          </Switch>
+        </div>
+      </Router>
     )
   }
+}
+
+const Home = () => {
+  return (
+    <div>
+      <header> 
+        <Navigation />
+      </header>
+      <SideBar />
+    </div>
+  )
 }
 
 class Navigation extends Component {
@@ -54,10 +75,17 @@ class SideBar extends Component {
       <div className='row'> 
         <div className='side-col'>
           {dashboard_array}
+        <div className='sidebar-links'>
+          <img src="img/dashboard-icon.jpg" />
+          Dashboard
+        </div>
+        <div className='sidebar-links'>
+          <Link to="/hostcomvizpage">test</Link>
         </div>
         <div className='body-col'>
 
         </div>
+      </div>
       </div>
     )
   }
