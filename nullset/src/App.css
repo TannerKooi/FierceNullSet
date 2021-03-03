@@ -4,9 +4,34 @@
 
 .nav-bar {
   background-color: #4262A3;
+  color: #D7DDEA;
 }
+.nav-bar-flex {
+  display: flex;
+}
+
 .navlink {
   color: black;
+}
+
+.logo-text {
+  margin-top: 10px;
+}
+
+.logo {
+  margin: 20px;
+}
+
+.board-logo {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+
+}
+
+.board-header {
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .navlink:hover {
@@ -16,7 +41,7 @@
 .side-col{
   background-color: #E5ECFA;
   text-align: center;
-  width: 15%;
+  width: 20%;
   height: 750px
 }
 
@@ -26,4 +51,5 @@
   width: auto;
   font-size: 24px;
   color:grey;
+  display: flex;
 }

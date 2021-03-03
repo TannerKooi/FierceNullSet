@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import {
-  Navbar,
-  Nav,
-  NavItem,
-  NavLink
 } from 'reactstrap';
 import './App.css';
 
 
 class App extends Component {
+
+  constructor(props) {
+
+    super(props);
+    this.state = {
+      dashboards: ['Dashboard 1', 'Dashboard 2', 'Dashboard 3']
+    };
+  }
+
   render(){
     return (
       <div>
         <header> 
           <Navigation />
         </header>
-        <SideBar />
+        <SideBar state={this.state} />
       </div>
     )
   }
@@ -24,26 +29,11 @@ class App extends Component {
 class Navigation extends Component {
   render() {
     return (
-      <div class='nav-bar'>
-        <Navbar expand="md">
-          <Nav className='mr-auto'>
-            <NavItem>
-              <NavLink href='/' className='navlink'> File </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/' className='navlink'> Data </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/' className='navlink'> Analysis </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/' className='navlink'> Window </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href='/' className='navlink'> Help </NavLink>
-            </NavItem>
-          </Nav>
-        </Navbar>
+      <div className='nav-bar'>
+        <div className='nav-bar-flex'>
+        <img className='logo' src="img/logo.jpeg" alt='Logo' width='50px'/>
+        <h1 className='logo-text'> SecOpsViz </h1>
+        </div>
       </div>
     )
   }
@@ -51,13 +41,19 @@ class Navigation extends Component {
 
 class SideBar extends Component {
   render() {
+    let dashboard_array = [];
+    for (let board of this.props.state.dashboards) {
+      dashboard_array.push(
+        <div className='sidebar-links' key={board}>
+          <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
+          <h2 className='board-header'> {board} </h2>
+        </div>
+      )
+    }
     return (
       <div className='row'> 
         <div className='side-col'>
-        <div className='sidebar-links'>
-          <img src="img/dashboard-icon.jpg"/>
-          Dashboard
-        </div>
+          {dashboard_array}
         </div>
         <div className='body-col'>
 
