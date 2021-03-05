@@ -18,16 +18,10 @@ class App extends Component {
 
   render(){
     return (
-      <div>
-        <header> 
-          <Navigation />
-        </header>
-        <SideBar state={this.state} />
-      </div>
       <Router>
         <div>
           <Switch>
-            <Route exact path='/' children={<Home />} />
+            <Route exact path='/' children={<Home dashboards={this.state.dashboards} />} />
             <Route exact path='/hostcomvizpage' children={<HostComVizPage />} />
           </Switch>
         </div>
@@ -36,13 +30,13 @@ class App extends Component {
   }
 }
 
-const Home = () => {
+const Home = ({ dashboards }) => {
   return (
     <div>
       <header> 
         <Navigation />
       </header>
-      <SideBar />
+      <SideBar dashboards={dashboards} />
     </div>
   )
 }
@@ -60,35 +54,64 @@ class Navigation extends Component {
   }
 }
 
-class SideBar extends Component {
-  render() {
-    let dashboard_array = [];
-    for (let board of this.props.state.dashboards) {
-      dashboard_array.push(
-        <div className='sidebar-links' key={board}>
-          <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
-          <h2 className='board-header'> {board} </h2>
-        </div>
-      )
-    }
-    return (
-      <div className='row'> 
-        <div className='side-col'>
-          {dashboard_array}
-        <div className='sidebar-links'>
-          <img src="img/dashboard-icon.jpg" />
-          Dashboard
-        </div>
-        <div className='sidebar-links'>
-          <Link to="/hostcomvizpage">test</Link>
-        </div>
-        <div className='body-col'>
-
-        </div>
-      </div>
+const SideBar = ({ dashboards }) => {
+  const dashboard_array = [];
+  dashboards.forEach((board) => {
+    dashboard_array.push (
+      <div className='sidebar-links' key={board}>
+        <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
+        <h2 className='board-header'> {board} </h2>
       </div>
     )
-  }
+  })
+  return (
+    <div className='row'> 
+        <div className='side-col'>
+          {dashboard_array}
+          <div className='sidebar-links' key='DanTest'>
+            <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
+            <h2 className='board-header'> 
+              <Link to="/hostcomvizpage">Test</Link>
+            </h2>
+          </div>
+      </div>
+    </div>
+  )
 }
+
+// class SideBar extends Component {
+//   componentDidMount() {
+//     console.log(this.props)
+//     let dashboard_array = [];
+//     for (let board of this.props.stat.dashboards) {
+//       dashboard_array.push(
+//         <div className='sidebar-links' key={board}>
+//           <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
+//           <h2 className='board-header'> {board} </h2>
+//         </div>
+//       )
+//     }
+//   }
+
+//   render() {
+//     return (
+//       <div className='row'> 
+//         <div className='side-col'>
+//           {dashboard_array}
+//         <div className='sidebar-links'>
+//           <img src="img/dashboard-icon.jpg" />
+//           Dashboard
+//         </div>
+//         <div className='sidebar-links'>
+//           <Link to="/hostcomvizpage">test</Link>
+//         </div>
+//         <div className='body-col'>
+
+//         </div>
+//       </div>
+//       </div>
+//     )
+//   }
+// }
 
 export default App;
