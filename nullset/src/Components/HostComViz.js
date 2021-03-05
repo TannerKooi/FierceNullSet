@@ -1,7 +1,8 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useRef, useEffect, useState} from 'react';
 import * as d3 from 'd3';
-import useResizeObserver from './ResizeObserver.js'
+// import { forceManyBody, forceSimulation } from 'd3';
+import useResizeObserver from './ResizeObserver'
 
 // const HostComViz = () => { // props
 //     const [data, setData] = useState([25, 30, 40, 60, 20])
@@ -11,30 +12,74 @@ import useResizeObserver from './ResizeObserver.js'
 //     useEffect(() => {
 //         const svg = d3.select(svgRef.current);
 //         svg
-//             .selectAll("circle")
-//             .data(data)
-//             .join(
-//                 enter => enter.append("circle"), 
-//                 update => update.attr("class", "updated"),
-//                 exit => exit.remove()
-//             )
-//             .attr("r", value => value)
-//             .attr("cx", value => value *2)
-//             .attr("cy", value => value *2)
-//             .attr("stroke", "red");
+            // .selectAll("circle")
+            // .data(data)
+            // .join(
+            //     enter => enter.append("circle"), 
+            //     update => update.attr("class", "updated"),
+            //     exit => exit.remove()
+            // )
+            // .attr("r", value => value)
+            // .attr("cx", value => value *2)
+            // .attr("cy", value => value *2)
+            // .attr("stroke", "red");
 //     }, [data])
 
 //     return (
 //         <svg ref={svgRef}></svg>
 //     );
-
+// }
 
 const HostComViz = ({ data }) => {
+    // const svgRef = useRef()
+
+    // useEffect(() => {
+    //     const svg = d3.select(svgRef.current)
+        
+    //     const createNetwork = (edgelist) => {
+    //         const nodeHash = {};
+    //         const nodes = [];
+    //         const edges = [];
+
+    //         edgelist.forEach((edge) => {
+    //             if (!nodeHash[edge.source]) {
+    //                 nodeHash[edge.source] = { id: edge.source, label: edge.source }
+    //                 nodes.push(nodeHash[edge.source])
+    //             }
+    //             if (!nodeHash[edge.target]) {
+    //                 nodeHash[edge.target] = { id: edge.target, label: edge.target }
+    //                 nodes.push(nodeHash[edge.target])
+    //             }
+    //             if (edge.weight >= 4) {
+    //                 edges.push({ source: nodeHash[edge.target], target: nodeHash[edge.target], weight: nodeHash[edge.weight]})
+    //             }
+    //         });
+    //         createForceNetwork(nodes, edges)
+    //     }
+
+    //     const createForceNetwork = (nodes, edges) => {
+
+    //     }
+
+
+
+    //     svg.selectAll(".circ")
+    //         // .data(dumm)
+    //         .enter()
+    //         .append("circle")
+    //         .classed('circ', true)
+    //         .attr("r", 5)
+    //         .attr("cx", 25)
+    //         .attr("cy", 25);
+    // }, [])
+    
     const svgRef = useRef()
     const wrapperRef = useRef();
     const dimensions = useResizeObserver(wrapperRef);
 
     useEffect(() => {
+        console.log('h1')
+        console.log(dimensions)
         if (!dimensions) return;
         const svg = d3.select(svgRef.current)
         svg.attr("viewBox", [
@@ -42,13 +87,13 @@ const HostComViz = ({ data }) => {
             -dimensions.height / 2,
             dimensions.width,
             dimensions.height
-        ]);
+        ])
+        console.log('here')
 
         const createNetwork = (edgeList) => {
             const nodeHash = {};
             const nodes = [];
             const edges = [];
-            console.log('jsss')
 
             Array.prototype.forEach.call(edgeList, (edge) => {
                 if (!nodeHash[edge.source]) {
@@ -63,6 +108,9 @@ const HostComViz = ({ data }) => {
                     edges.push({source: nodeHash[edge.source], target: nodeHash[edge.target], weight: edge.weight});
                 }
             });
+            console.log(nodeHash)
+            console.log(nodes)
+            console.log(edges)
             createForceNetwork(nodes, edges);
         }
 
@@ -71,6 +119,7 @@ const HostComViz = ({ data }) => {
             //create a network from an edgelist
             const force = d3.forceSimulation(nodes)
             .force('link', d3.forceLink().links(edges))
+            // .force('center', d3.forceCenter(dimensions.width, dimensions.height))
             // .size([500,500])
             .force('charge', function (d) {return Math.min(-100, d.weight * -50)})
             // .charge(function (d) {return Math.min(-100, d.weight * -50)})
@@ -88,14 +137,33 @@ const HostComViz = ({ data }) => {
             .data(nodes)
             .enter()
             .append("g")
-            .attr("class", "node")
-            .on("click", nodeClick)
-            .on("dblclick", nodeDoubleClick)
-            .on("mouseover", nodeOver)
-            .on("mouseout", nodeOut);
+            .attr("class", "node");
+            // .on("click", nodeClick)
+            // .on("dblclick", nodeDoubleClick)
+            // .on("mouseover", nodeOver)
+            // .on("mouseout", nodeOut);
             // .call(force.drag());
 
-            nodeEnter.enter().append("circle")
+            // svg.selectAll("g.node")
+            // .join(
+            //     enter => enter.append("circle"),
+            //     update => update.attr("class", "node"),
+            //     exit => exit.remove()
+            // )
+            // .attr('r', 5)
+            // .attr("fill", "#CC9999")
+            // .attr("stroke", "black")
+            // .attr("stroke-width", "2px")
+
+
+            // nodeEnter
+            //     .join('circle')
+            //     .attr('r', 5)
+            //     .attr("fill", "#CC9999")
+            //     .attr("stroke", "black")
+            //     .attr("stroke-width", "2px")
+
+            nodeEnter.append("circle")
             .attr("fill", "#CC9999")
             .attr("stroke", "black")
             .attr("stroke-width", "2px")
@@ -179,12 +247,17 @@ const HostComViz = ({ data }) => {
             }
         }
         d3.csv(data).then(function(ddata) {createNetwork(ddata)});
-    }, [data])
+    }, [data, dimensions])
     return (
         <div ref={wrapperRef} style={{ marginBottom: "2rem" }}>
             <svg ref={svgRef}></svg>
         </div>
     );
+    // return (
+    //     <div>
+    //         <svg ref={svgRef}></svg>
+    //     </div>
+    // )
 }
 
 export default HostComViz

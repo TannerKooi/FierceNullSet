@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import HostComViz from './HostComViz';
 import data from './data.csv'
 
@@ -11,3 +10,5 @@ const HostComVizPage = () => {
 }
 
 export default HostComVizPage
+
+

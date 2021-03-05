@@ -53,3 +53,13 @@
   color:grey;
   display: flex;
 }
+
+.bard {
+  background-color: #720570;
+  width: 25px;
+  height: 150px;
+}
+
+.circ {
+  stroke: red
+}

@@ -4,6 +4,7 @@ import {
 } from 'reactstrap';
 import './App.css';
 import HostComVizPage from './Components/HostComVizPage';
+import DevDestress from './Components/DevDestress';
 
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' children={<Home dashboards={this.state.dashboards} />} />
             <Route exact path='/hostcomvizpage' children={<HostComVizPage />} />
+            <Route exact path='/devdestress' children={<DevDestress />} />
           </Switch>
         </div>
       </Router>
@@ -72,6 +74,13 @@ const SideBar = ({ dashboards }) => {
             <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
             <h2 className='board-header'> 
               <Link to="/hostcomvizpage">Test</Link>
+            </h2>
+          </div>
+
+          <div className='sidebar-links' key='DanTest'>
+            <img src="img/icon.jpg" alt='Dashboard logo' width='25px' height='25px' className='board-logo' />
+            <h2 className='board-header'> 
+              <Link to="/devdestress">DESTRESS</Link>
             </h2>
           </div>
       </div>
