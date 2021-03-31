@@ -31,13 +31,11 @@ class LineChart extends Component {
   // BUILD SVG PATH
   makePath() {
     const {data, color} = this.props;
-    return d3.line().x(d => x(data.Time)).y(d => y(data.Length));
-    
-    // let pathD = "M " + this.getSvgX(data[0].Time) + " " + this.getSvgY(data[0].Length) + " ";
+    let pathD = "M " + this.getSvgX(data[0].Time) + " " + this.getSvgY(data[0].Length) + " ";
 
-    // pathD += new Map(point, i) => {
-    //   return "L " + this.getSvgX(point.Time) + " " + this.getSvgY(point.Length) + " ";
-    // });
+    pathD += data.map((point, i) => {
+      return "L " + this.getSvgX(point.Time) + " " + this.getSvgY(point.Length) + " ";
+    });
 
     return (
       <path className="linechart_path" d={pathD} style={{stroke: color}} />
