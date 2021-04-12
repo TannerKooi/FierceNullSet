@@ -63,3 +63,11 @@
 .circ {
   stroke: red
 }
+
+.tooltip {
+    background: white;
+    border-color: black;
+    border-radius: .5px;
+    border-style: solid;
+    padding: 10px;
+}
